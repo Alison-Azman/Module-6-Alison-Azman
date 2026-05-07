@@ -1,27 +1,35 @@
-from turtle import Turtle
+import turtle
 
-class Scoreboard(Turtle):
+class Scoreboard(turtle.Turtle):
+
     def __init__(self):
         super().__init__()
+        self.score=0
+        self.highscore=0
         self.penup()
+        self.color("white")
+        self.goto(0,260)
+        self.update_scoreboard()
         self.hideturtle()
-        self.color("black")
-        self.truck_score = 0
-        self.player_score = 0
-        self.goto(0, 260)
-        self.update_score()
 
-    def update_score(self):
+    def update_scoreboard(self):
         self.clear()
         self.write(
-            f"Player {self.player_score}   Trucks: {self.truck_score}",
-            align="center",
-            font=("Arial", 16, "bold"))
+            f"Score: {self.score} High Score: {self.highscore}", align="center", font=("Courier", 18, "bold"))
 
-    def player_point(self):
-        self.player_score += 1
-        self.update_score()
+    def increase_score(self):
+        self.score+=1
+        if self.score>self.highscore:
+            self.highscore=self.score
+        self.update_scoreboard()
 
-    def truck_point(self):
-        self.truck_score += 1
-        self.update_score()
+
+    def reset(self):
+        self.score=0
+        self.update_scoreboard()
+
+
+
+    def game_over(self):
+        self.goto(0,0)
+        self.write("GAME OVER", align="center", font=("Courier", 18, "bold"))
